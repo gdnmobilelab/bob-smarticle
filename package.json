@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/gdnmobilelab/bob-smarticle#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "deasync": "^0.1.10",
+    "express": "^4.16.2",
+    "google-spreadsheet-to-json": "^1.0.0",
+    "html-entities": "^1.2.1"
   }
 }
