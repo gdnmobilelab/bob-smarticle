@@ -5,6 +5,8 @@ var Entities = require('html-entities').AllHtmlEntities;
 
 var keys = require('../keys.json');
 
+var hour = 60 * 60 * 1000;
+
 var isDone = false,
     data;
 
@@ -77,7 +79,7 @@ function orderByGroup(atoms) {
 
         if (atoms[i].group) {
             if (groupedAtoms[groupName]) {
-                groupedAtoms[groupName].atoms[Object.keys(groupedAtoms[groupName].atoms).length + 1] = atoms[i];
+                groupedAtoms[groupName].atoms[Object.keys(groupedAtoms[groupName].atoms).length] = atoms[i];
             } else {
                 groupedAtoms[groupName] = {
                     groupName: groupName,
@@ -142,8 +144,28 @@ function fetchData(id, callback) {
     });
 }
 
+function updateOldData(data, id) {
+    data.lastFetched = new Date();
+
+    if (!fs.existsSync('./.data')) {
+        fs.mkdirSync('./.data');
+    }
+
+    if (!fs.existsSync('./.data/smarticles')) {
+        fs.mkdirSync('./.data/smarticles');
+    }
+
+    fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
+}
+
 module.exports = function(id) {
-    // TODO: look at old data
+    if (fs.existsSync('./.data/smarticles/' + id + '.json')) {
+        var oldData = fs.readJsonSync('./.data/smarticles/' + id + '.json');
+
+        if (((new Date) - new Date(oldData.lastFetched)) < hour) {
+            return oldData;
+        }
+    }
 
     // fetch data
     fetchData(id, function(spreadsheet) {
@@ -154,7 +176,7 @@ module.exports = function(id) {
             characters: spreadsheet[2],
             lastUpdated: new Date()
         }
-
+    
         // manipulate and clean data
         data.groups = createTimeStamps(data.groups);
         data.lastUpdated = getLastUpdated(data.groups);
@@ -162,7 +184,9 @@ module.exports = function(id) {
         data.groups = addDynamicCharacters(data.groups, data.characters);
         data.groups = showWeighting(data.groups);
         data.groups = orderByGroup(data.groups);
-
+    
+        updateOldData(data, id);
+    
         isDone = true;
     });
 
