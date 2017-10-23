@@ -1,3 +1,4 @@
+var fs = require('fs-extra');
 var gsjson = require('google-spreadsheet-to-json');
 var deasync = require('deasync');
 var Entities = require('html-entities').AllHtmlEntities;
@@ -141,9 +142,11 @@ function fetchData(id, callback) {
     });
 }
 
-module.exports = function() {
+module.exports = function(id) {
+    // TODO: look at old data
+
     // fetch data
-    fetchData('13T6ddF73l9EtESaIjppzWFfoq4RA_ihsl3y5WRm0Mxs', function(spreadsheet) {
+    fetchData(id, function(spreadsheet) {
         // data structure
         data = {
             groups: spreadsheet[0],
