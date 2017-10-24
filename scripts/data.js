@@ -69,19 +69,32 @@ function addDynamicCharacters(atoms, characters) {
     return atoms;
 }
 
+function findGroup(groups, groupName) {
+    for (var i in groups) {
+        if (groupName === groups[i].groupName) {
+            return i;
+        }
+    }
+
+    return false;
+}
+
 function orderByGroup(atoms) {
     // put all atoms into objects
     var groupedAtoms = {};
     var nonGroupedKey = 0;
 
+    var groupCount = 0;
+
     for (var i in atoms) {
         var groupName = atoms[i].group;
 
         if (atoms[i].group) {
-            if (groupedAtoms[groupName]) {
-                groupedAtoms[groupName].atoms[Object.keys(groupedAtoms[groupName].atoms).length] = atoms[i];
+            groupNumber = findGroup(groupedAtoms, groupName);
+            if (groupNumber) {
+                groupedAtoms[groupNumber].atoms[Object.keys(groupedAtoms[groupNumber].atoms).length] = atoms[i];
             } else {
-                groupedAtoms[groupName] = {
+                groupedAtoms[groupCount] = {
                     groupName: groupName,
                     groupType: atoms[i].groupType,
                     isFaq: atoms[i].isFaq,
@@ -89,15 +102,17 @@ function orderByGroup(atoms) {
                         0: atoms[i]
                     }
                 };
+
+                groupCount++;
             }
         } else {
-            groupedAtoms['group' + nonGroupedKey] = {
+            groupedAtoms[groupCount] = {
                 isFaq: atoms[i].isFaq,
                 atoms: {
                     0: atoms[i]
                 }
             };
-            nonGroupedKey++;
+            groupCount++;
         }
     }
 
@@ -159,6 +174,7 @@ function updateOldData(data, id) {
 }
 
 module.exports = function(id) {
+/*
     if (fs.existsSync('./.data/smarticles/' + id + '.json')) {
         var oldData = fs.readJsonSync('./.data/smarticles/' + id + '.json');
 
@@ -166,6 +182,7 @@ module.exports = function(id) {
             return oldData;
         }
     }
+*/
 
     // fetch data
     fetchData(id, function(spreadsheet) {
