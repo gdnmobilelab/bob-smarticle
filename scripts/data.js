@@ -199,7 +199,8 @@ module.exports = function(id) {
             groups: spreadsheet[0],
             furniture: getFurniture(spreadsheet[1]),
             characters: spreadsheet[2],
-            lastUpdated: new Date()
+            lastUpdated: new Date(),
+            id: id
         }
 
         // manipulate and clean data
