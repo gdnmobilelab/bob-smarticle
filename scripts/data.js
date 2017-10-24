@@ -9,6 +9,16 @@ var isDebug = true;
 var isDone = false,
     data;
 
+function discardIncompleteAtoms(atoms) {
+    for (var i in atoms) {
+        if (!atoms[i].title) {
+            delete atoms[i];
+        }
+    }
+
+    return atoms;
+}
+
 function getFurniture(furniture) {
     var organisedFurniture = {}
 
@@ -193,6 +203,7 @@ module.exports = function(id) {
         }
     
         // manipulate and clean data
+        data.groups = discardIncompleteAtoms(data.groups);
         data.groups = createTimeStamps(data.groups);
         data.lastUpdated = getLastUpdated(data.groups);
         data.groups = cleanCopy(data.groups);
