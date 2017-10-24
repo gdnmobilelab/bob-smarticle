@@ -20,9 +20,17 @@ function removeSeen(data, atomsSeen) {
     return data;
 }
 
+function rateAtoms(data, params) {
+    for (var i in data.groups) {
+        
+    }
+
+    return data;
+}
+
 module.exports = function(data, params) {
     params = cleanParams(params);
-    data = removeSeen(data, params.seen);
+    data = rateAtoms(data);
 
     return data;
 };

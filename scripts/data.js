@@ -152,6 +152,22 @@ function showWeighting(atoms) {
     return atoms;
 }
 
+function highestWeighting(groups) {
+    for (var i in groups) {
+        var highestWeighting = 4;
+
+        for (var atom in groups[i].atoms) {
+            if (groups[i].atoms[atom].weighting < highestWeighting) {
+                highestWeighting = groups[i].atoms[atom].weighting;
+            }
+        }
+
+        groups[i].highestWeighting = highestWeighting;
+    }
+
+    return groups;
+}
+
 function fetchData(id, callback) {
     gsjson({
         spreadsheetId: id,
@@ -211,6 +227,7 @@ module.exports = function(id) {
         data.groups = addDynamicCharacters(data.groups, data.characters);
         data.groups = showWeighting(data.groups);
         data.groups = orderByGroup(data.groups);
+        data.groups = highestWeighting(data.groups);
 
         updateOldData(data, id);
 
