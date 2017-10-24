@@ -5,8 +5,7 @@ var Entities = require('html-entities').AllHtmlEntities;
 
 var keys = require('../keys.json');
 
-var hour = 60 * 60 * 1000;
-
+var isDebug = true;
 var isDone = false,
     data;
 
@@ -174,15 +173,14 @@ function updateOldData(data, id) {
 }
 
 module.exports = function(id) {
-/*
-    if (fs.existsSync('./.data/smarticles/' + id + '.json')) {
+    if (fs.existsSync('./.data/smarticles/' + id + '.json') && !isDebug) {
         var oldData = fs.readJsonSync('./.data/smarticles/' + id + '.json');
+        var hour = 60 * 60 * 1000;
 
         if (((new Date) - new Date(oldData.lastFetched)) < hour) {
             return oldData;
         }
     }
-*/
 
     // fetch data
     fetchData(id, function(spreadsheet) {
