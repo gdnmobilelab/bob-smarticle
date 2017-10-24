@@ -11,7 +11,7 @@ var isDone = false,
 
 function discardIncompleteAtoms(atoms) {
     for (var i in atoms) {
-        if (!atoms[i].title) {
+        if (!atoms[i].type) {
             delete atoms[i];
         }
     }
