@@ -201,7 +201,7 @@ module.exports = function(id) {
             characters: spreadsheet[2],
             lastUpdated: new Date()
         }
-    
+
         // manipulate and clean data
         data.groups = discardIncompleteAtoms(data.groups);
         data.groups = createTimeStamps(data.groups);
@@ -210,9 +210,9 @@ module.exports = function(id) {
         data.groups = addDynamicCharacters(data.groups, data.characters);
         data.groups = showWeighting(data.groups);
         data.groups = orderByGroup(data.groups);
-    
+
         updateOldData(data, id);
-    
+
         isDone = true;
     });
 
