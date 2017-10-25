@@ -4,7 +4,7 @@ function evaluateWeighting(weighting) {
     } else if (weighting == 2) {
         return 0.5;
     } else if (weighting == 3) {
-        return 0.1;
+        return 0.25;
     } else {
         return 0;
     }
@@ -17,7 +17,7 @@ function weightingVsVisit(weighting, visit) {
 
     // promote 3s and 4s on subsequent visits
     } else if (visit > 1 && weighting == 3) {
-        return 0.3;
+        return 0.4;
     } else if (visit > 1 && weighting == 4) {
         return 0.25;
     } else {
@@ -41,7 +41,7 @@ function evaluateSeen(group, seen) {
         if (highestWeighting == 1) {
             return -.75;
         } else if (highestWeighting == 2) {
-            return -.6;
+            return -.5;
         } else if (highestWeighting == 3) {
             return -.4;
         } else {

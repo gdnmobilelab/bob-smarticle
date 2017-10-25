@@ -10,6 +10,7 @@ function collapseHalfSeenGroups(groups, seen) {
                 }
             }
 
+            // TODO: Make it so if an atom has been published since your last visit, never collapse
             if (seenAtomsInGroup > totalAtomsInGroup / 2) {
                 groups[i].groupType = 'collapsed';
             }
