@@ -1,14 +1,3 @@
-function cleanParams(params) {
-    params.seen = params.seen.split(',');
-    for (var i in params.seen) {
-        params.seen[i] = parseInt(params.seen[i]);
-    }
-
-    params.visit = parseInt(params.visit);
-
-    return params;
-}
-
 function evaluateWeighting(weighting) {
     if (weighting == 1) {
         return 0.75;
@@ -97,7 +86,6 @@ function rateAtoms(data, params) {
 }
 
 module.exports = function(data, params) {
-    params = cleanParams(params);
     data = rateAtoms(data, params);
 
     return data;

@@ -1,6 +1,9 @@
 var getData = require('./scripts/data.js');
-var filter = require('./scripts/filter.js');
+var cleanParams = require('./scripts/params.js');
+var rate = require('./scripts/rate.js');
 var clean = require('./scripts/clean.js');
+var cap = require('./scripts/cap.js');
+var collapse = require('./scripts/collapse.js');
 
 var express = require('express');
 var app = express();
@@ -9,9 +12,13 @@ app.get('/', (req, res) => {
     if (Object.keys(req.query).length == 0) {
         res.send('No arguments provided');
     } else {
-        var data = getData(req.query.id);
-            data = filter(data, req.query);
+        var params = cleanParams(req.query);
+
+        var data = getData(params.id);
+            data = rate(data, params);
             data = clean(data);
+            data = cap(data);
+            data = collapse(data, params);
 
         res.setHeader('Content-Type', 'application/json');
         res.header("Access-Control-Allow-Origin", "*");
