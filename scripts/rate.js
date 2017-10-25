@@ -4,7 +4,7 @@ function evaluateWeighting(weighting) {
     } else if (weighting == 2) {
         return 0.5;
     } else if (weighting == 3) {
-        return 0.25;
+        return 0.1;
     } else {
         return 0;
     }
@@ -17,7 +17,7 @@ function weightingVsVisit(weighting, visit) {
 
     // promote 3s and 4s on subsequent visits
     } else if (visit > 1 && weighting == 3) {
-        return 0.5;
+        return 0.3;
     } else if (visit > 1 && weighting == 4) {
         return 0.25;
     } else {
