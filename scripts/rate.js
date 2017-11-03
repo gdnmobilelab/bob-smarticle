@@ -52,6 +52,14 @@ function evaluateSeen(group, seen) {
     }
 }
 
+function boostFaqs(group) {
+    if (group.isFaq) {
+        return +.75;
+    } else {
+        return 0;
+    }
+}
+
 function filterByRating(groups) {
     for (var i in groups) {
         if (groups[i].rating <= 0) {
@@ -76,6 +84,7 @@ function rateAtoms(data, params) {
             rating += evaluateWeighting(group.highestWeighting).clamp();
             rating += weightingVsVisit(group.highestWeighting, params.visit).clamp();
             rating += evaluateSeen(group, params.seen).clamp();
+            rating += boostFaqs(group).clamp();
 
         data.groups[i].rating = rating;
     }
