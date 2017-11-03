@@ -3,7 +3,7 @@ var cleanParams = require('./scripts/params.js');
 var rate = require('./scripts/rate.js');
 var clean = require('./scripts/clean.js');
 var cap = require('./scripts/cap.js');
-var collapse = require('./scripts/collapse.js');
+var groups = require('./scripts/groups.js');
 
 var express = require('express');
 var app = express();
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
             data = rate(data, params);
             data = clean(data);
             data = cap(data);
-            data = collapse(data, params);
+            data = groups(data, params);
 
         res.setHeader('Content-Type', 'application/json');
         res.header("Access-Control-Allow-Origin", "*");

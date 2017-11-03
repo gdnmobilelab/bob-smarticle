@@ -1,6 +1,6 @@
-function collapseHalfSeenGroups(groups, seen) {
+function expandCollapsedGroupsIfSeen(groups, seen) {
     for (var i in groups) {
-        if (groups[i].groupType === 'expanded') {
+        if (groups[i].groupType === 'collapsed') {
             var totalAtomsInGroup = Object.keys(groups[i].atoms).length;
             var seenAtomsInGroup = 0;
 
@@ -11,8 +11,8 @@ function collapseHalfSeenGroups(groups, seen) {
             }
 
             // TODO: Make it so if an atom has been published since your last visit, never collapse
-            if (seenAtomsInGroup > totalAtomsInGroup / 2) {
-                groups[i].groupType = 'collapsed';
+            if (seenAtomsInGroup > 1) {
+                groups[i].groupType = 'expanded';
             }
         }
     }
@@ -22,7 +22,7 @@ function collapseHalfSeenGroups(groups, seen) {
 
 
 module.exports = function(data, params) {
-    data.groups = collapseHalfSeenGroups(data.groups, params.seen);
+    data.groups = expandCollapsedGroupsIfSeen(data.groups, params.seen);
 
     return data;
 };
