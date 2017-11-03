@@ -20,9 +20,19 @@ function expandCollapsedGroupsIfSeen(groups, seen) {
     return groups;
 }
 
+function expandGroupsOfTwo(groups) {
+    for (var i in groups) {
+        if (Object.keys(groups[i].atoms).length == 2 && groups[i].groupType == 'collapsed') {
+            groups[i].groupType = 'expanded';
+        }
+    }
+
+    return groups;
+}
 
 module.exports = function(data, params) {
     data.groups = expandCollapsedGroupsIfSeen(data.groups, params.seen);
+    data.groups = expandGroupsOfTwo(data.groups);
 
     return data;
 };
