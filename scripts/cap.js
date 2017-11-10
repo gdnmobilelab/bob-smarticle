@@ -1,14 +1,34 @@
 var cap = 10;
 
-module.exports = function(data) {
-    var sortedData = Object.keys(data.groups).sort( function(keyA, keyB) {
-        return data.groups[keyB].rating - data.groups[keyA].rating || parseInt(keyA) - parseInt(keyB);
+function sortDataByRating(groups) {
+    return Object.keys(groups).sort( function(keyA, keyB) {
+        return groups[keyB].rating - groups[keyA].rating || parseInt(keyA) - parseInt(keyB);
+    });
+}
+
+function removeNonFaqGroups(groupsToRemove, groups) {
+    var list = [];
+
+    groupsToRemove.map(function(group) {
+        if (!groups[group].isFaq) {
+            list.push(group);
+        }
     });
 
-    var capped = sortedData.splice(0, cap);
+    return list;
+}
+
+function removeGroupsPostCap(groupsToRemove) {
+    return groupsToRemove.splice(cap, groupsToRemove.length);
+}
+
+module.exports = function(data) {
+    var groupsToRemove = sortDataByRating(data.groups);
+        groupsToRemove = removeNonFaqGroups(groupsToRemove, data.groups);
+        groupsToRemove = removeGroupsPostCap(groupsToRemove);
 
     for (var i in data.groups) {
-        if (!capped.includes(i)) {
+        if (groupsToRemove.includes(i)) {
             delete data.groups[i];
         }
     }
