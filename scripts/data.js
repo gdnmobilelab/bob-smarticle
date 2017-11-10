@@ -169,6 +169,8 @@ function highestWeighting(groups) {
 }
 
 function fetchData(id, callback) {
+    console.log(id);
+
     gsjson({
         spreadsheetId: id,
         allWorksheets: true,
