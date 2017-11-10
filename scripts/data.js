@@ -175,7 +175,7 @@ function fetchData(id, callback) {
         credentials: keys
     })
     .then(function(result) {
-        callback(result);
+        callback(result, id);
     })
     .then(function(err) {
         if (err) {
@@ -198,9 +198,7 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
-var id = process.argv.slice(2)[1];
-
-fetchData(id, function(spreadsheet) {
+fetchData(process.argv.slice(2)[1], function(spreadsheet, id) {
     console.log(id);
     console.log('Fetching data...');
 
@@ -212,6 +210,8 @@ fetchData(id, function(spreadsheet) {
         lastUpdated: new Date(),
         id: id
     }
+
+    console.log(data.id);
 
     // manipulate and clean data
     data.groups = discardIncompleteAtoms(data.groups);
