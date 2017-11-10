@@ -202,7 +202,7 @@ function updateOldData(data, id) {
 
 console.log(process.argv.slice(2));
 
-fetchData(process.argv.slice(2)[1], function(spreadsheet, id) {
+fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
     console.log(id);
     console.log('Fetching data...');
 
