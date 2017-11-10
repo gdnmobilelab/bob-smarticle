@@ -201,6 +201,7 @@ function updateOldData(data, id) {
 var id = process.argv.slice(2)[1];
 
 fetchData(id, function(spreadsheet) {
+    console.log(id);
     console.log('Fetching data...');
 
     // data structure
