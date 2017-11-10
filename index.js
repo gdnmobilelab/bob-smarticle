@@ -1,10 +1,10 @@
-var getData = require('./scripts/data.js');
 var cleanParams = require('./scripts/params.js');
 var rate = require('./scripts/rate.js');
 var clean = require('./scripts/clean.js');
 var cap = require('./scripts/cap.js');
 var groups = require('./scripts/groups.js');
 
+var fs = require('fs-extra');
 var express = require('express');
 var app = express();
 
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     } else {
         var params = cleanParams(req.query);
 
-        var data = getData(params.id);
+        var data = fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
             data = rate(data, params);
             data = clean(data);
             data = cap(data);

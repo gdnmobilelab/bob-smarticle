@@ -4,7 +4,8 @@
   "description": "Serverside node app for smarticles",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "update": "node scripts/data.js"
   },
   "repository": {
     "type": "git",

@@ -198,45 +198,39 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
-module.exports = function(id) {
-    if (fs.existsSync('./.data/smarticles/' + id + '.json') && !isDebug) {
-        var oldData = fs.readJsonSync('./.data/smarticles/' + id + '.json');
-        var hour = 60 * 60 * 1000;
+var id = process.argv.slice(2)[1];
 
-        if (((new Date) - new Date(oldData.lastFetched)) < hour) {
-            return oldData;
-        }
+fetchData(id, function(spreadsheet) {
+    console.log('Fetching data...');
+
+    // data structure
+    data = {
+        groups: spreadsheet[0],
+        furniture: getFurniture(spreadsheet[1]),
+        characters: spreadsheet[2],
+        lastUpdated: new Date(),
+        id: id
     }
 
-    // fetch data
-    fetchData(id, function(spreadsheet) {
-        // data structure
-        data = {
-            groups: spreadsheet[0],
-            furniture: getFurniture(spreadsheet[1]),
-            characters: spreadsheet[2],
-            lastUpdated: new Date(),
-            id: id
-        }
+    // manipulate and clean data
+    data.groups = discardIncompleteAtoms(data.groups);
+    data.groups = createTimeStamps(data.groups);
+    data.lastUpdated = getLastUpdated(data.groups);
+    data.groups = cleanCopy(data.groups);
+    data.groups = addDynamicCharacters(data.groups, data.characters);
+    data.groups = showWeighting(data.groups);
+    data.groups = orderByGroup(data.groups);
+    data.groups = highestWeighting(data.groups);
 
-        // manipulate and clean data
-        data.groups = discardIncompleteAtoms(data.groups);
-        data.groups = createTimeStamps(data.groups);
-        data.lastUpdated = getLastUpdated(data.groups);
-        data.groups = cleanCopy(data.groups);
-        data.groups = addDynamicCharacters(data.groups, data.characters);
-        data.groups = showWeighting(data.groups);
-        data.groups = orderByGroup(data.groups);
-        data.groups = highestWeighting(data.groups);
+    updateOldData(data, id);
 
-        updateOldData(data, id);
+    isDone = true;
 
-        isDone = true;
-    });
+    console.log('Updated ' + data.furniture.title);
 
     deasync.loopWhile(function() {
         return !isDone;
     });
 
     return data;
-};
+});
