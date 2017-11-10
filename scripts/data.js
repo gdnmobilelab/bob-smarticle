@@ -169,8 +169,6 @@ function highestWeighting(groups) {
 }
 
 function fetchData(id, callback) {
-    console.log(id);
-
     gsjson({
         spreadsheetId: id,
         allWorksheets: true,
@@ -200,10 +198,7 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
-console.log(process.argv.slice(2));
-
 fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
-    console.log(id);
     console.log('Fetching data...');
 
     // data structure
@@ -214,8 +209,6 @@ fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
         lastUpdated: new Date(),
         id: id
     }
-
-    console.log(data.id);
 
     // manipulate and clean data
     data.groups = discardIncompleteAtoms(data.groups);
