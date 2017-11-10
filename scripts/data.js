@@ -200,6 +200,8 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
+console.log(process.argv);
+
 fetchData(process.argv.slice(2)[1], function(spreadsheet, id) {
     console.log(id);
     console.log('Fetching data...');
