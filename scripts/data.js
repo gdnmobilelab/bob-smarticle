@@ -211,8 +211,13 @@ fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
     }
 
     // manipulate and clean data
+    console.log(data);
+
     data.groups = discardIncompleteAtoms(data.groups);
     data.groups = createTimeStamps(data.groups);
+
+    console.log(data);
+
     data.lastUpdated = getLastUpdated(data.groups);
     data.groups = cleanCopy(data.groups);
     data.groups = addDynamicCharacters(data.groups, data.characters);
