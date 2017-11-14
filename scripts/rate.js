@@ -30,7 +30,7 @@ function evaluateSeen(group, seen) {
     var numberOfSeenAtoms = 0;
 
     for (var i in group.atoms) {
-        if (seen.includes(group.atoms[i].id)) {
+        if (seen.includes(parseInt(group.atoms[i].id))) {
             numberOfSeenAtoms++;
         }
     }

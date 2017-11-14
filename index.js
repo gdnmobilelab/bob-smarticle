@@ -15,19 +15,10 @@ app.get('/', (req, res) => {
         var params = cleanParams(req.query);
 
         var data = fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
-
-        console.log(data);
-
             data = rate(data, params);
-            console.log(data);
             data = clean(data);
-
-            console.log(data);
-
             data = cap(data);
             data = groups(data, params);
-
-            console.log(data);
 
         res.setHeader('Content-Type', 'application/json');
         res.header("Access-Control-Allow-Origin", "*");
