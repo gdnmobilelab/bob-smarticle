@@ -26,16 +26,7 @@ function weightingVsVisit(weighting, visit) {
 }
 
 function evaluateSeen(group, seen) {
-    var numberOfAtoms = Object.keys(group.atoms).length;
-    var numberOfSeenAtoms = 0;
-
-    for (var i in group.atoms) {
-        if (seen.includes(parseInt(group.atoms[i].id))) {
-            numberOfSeenAtoms++;
-        }
-    }
-
-    if (numberOfAtoms === numberOfSeenAtoms) {
+    if (group.atomCount === group.seen) {
         var highestWeighting = group.highestWeighting;
 
         if (highestWeighting == 1) {
@@ -52,9 +43,9 @@ function evaluateSeen(group, seen) {
     }
 }
 
-function boostFaqs(group) {
-    if (group.isFaq) {
-        return +.75;
+function boostFaqsIfNotSeen(group) {
+    if (group.isFaq && group.seen !== group.atomCount) {
+        return .45;
     } else {
         return 0;
     }
@@ -83,8 +74,8 @@ function rateAtoms(data, params) {
         var rating = 0;
             rating += evaluateWeighting(group.highestWeighting).clamp();
             rating += weightingVsVisit(group.highestWeighting, params.visit).clamp();
-//             rating += boostFaqs(group).clamp();
             rating += evaluateSeen(group, params.seen).clamp();
+            rating += boostFaqsIfNotSeen(group, params.seen).clamp();
             rating = rating.clamp();
 
         data.groups[i].rating = rating;
