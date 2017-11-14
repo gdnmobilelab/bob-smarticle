@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
             data = cap(data);
             data = groups(data, params);
 
+            console.log(data);
+
         res.setHeader('Content-Type', 'application/json');
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

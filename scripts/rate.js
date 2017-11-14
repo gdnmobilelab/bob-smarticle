@@ -29,8 +29,6 @@ function evaluateSeen(group, seen) {
     var numberOfAtoms = Object.keys(group.atoms).length;
     var numberOfSeenAtoms = 0;
 
-    console.log(seen);
-
     for (var i in group.atoms) {
         if (seen.includes(group.atoms[i].id)) {
             numberOfSeenAtoms++;
