@@ -83,7 +83,7 @@ function rateAtoms(data, params) {
         var rating = 0;
             rating += evaluateWeighting(group.highestWeighting).clamp();
             rating += weightingVsVisit(group.highestWeighting, params.visit).clamp();
-            rating += boostFaqs(group).clamp();
+//             rating += boostFaqs(group).clamp();
             rating += evaluateSeen(group, params.seen).clamp();
             rating = rating.clamp();
 
