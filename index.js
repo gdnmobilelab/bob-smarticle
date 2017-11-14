@@ -16,9 +16,10 @@ app.get('/', (req, res) => {
 
         var data = fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
 
-        console.log(typeof data);
+        console.log(data);
 
             data = rate(data, params);
+            console.log(data);
             data = clean(data);
 
             console.log(data);
