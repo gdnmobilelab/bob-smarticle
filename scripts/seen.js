@@ -14,6 +14,16 @@ function evaluateSeen(group, seen) {
     return group;
 }
 
+function removeSeenGroups(data) {
+    for (var i in data.groups) {
+        if (data.groups[i].atomCount === data.groups[i].seen) {
+            delete data.groups[i];
+        }
+    }
+
+    return data;
+}
+
 module.exports = function(data, params) {
     for (var i in data.groups) {
         var group = data.groups[i];
@@ -21,6 +31,8 @@ module.exports = function(data, params) {
 
         data.groups[i] = group;
     }
+
+    data = removeSeenGroups(data);
 
     return data;
 };
