@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "update": "node scripts/data.js",
+    "update": "node scripts/update.js",
     "update-remote": "ssh -i gdn-ec2-box.pem ec2-user@34.228.217.229 'cd bob-smarticle && git pull && npm run update -- 1MkB8FLPtYSSrwbXFQrOY2PVbBN6Hh36hsoysHqAIxFc && forever restartall'"
   },
   "repository": {

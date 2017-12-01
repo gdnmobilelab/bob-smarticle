@@ -7,7 +7,6 @@ var validate = require('../scripts/validate.js');
 
 var keys = require('../keys.json');
 
-var isDebug = true;
 var isDone = false,
     data;
 
@@ -226,39 +225,45 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
-fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
-    console.log('Fetching data...');
+module.exports = function(id) {
+    isDone = false;
 
-    // data structure
-    data = {
-        groups: spreadsheet[0],
-        furniture: getFurniture(spreadsheet[1]),
-        characters: spreadsheet[2],
-        lastUpdated: new Date(),
-        id: id
-    }
+    fetchData(id, function(spreadsheet, id) {
+        console.log('Fetching data...');
 
-    data = validate(data);
+        // data structure
+        data = {
+            groups: spreadsheet[0],
+            furniture: getFurniture(spreadsheet[1]),
+            characters: spreadsheet[2],
+            lastUpdated: new Date(),
+            id: id
+        }
 
-    // manipulate and clean data
-    data.groups = createTimeStamps(data.groups);
-    data.groups = calculateTimeUntilRead(data.groups);
-    data.lastUpdated = getLastUpdated(data.groups);
-    data.groups = cleanCopy(data.groups);
-    data.groups = addDynamicCharacters(data.groups, data.characters);
-    data.groups = showWeighting(data.groups);
-    data.groups = orderByGroup(data.groups);
-    data.groups = highestWeighting(data.groups);
+        data = validate(data);
 
-    updateOldData(data, id);
+        // manipulate and clean data
+        data.groups = createTimeStamps(data.groups);
+        data.groups = calculateTimeUntilRead(data.groups);
+        data.lastUpdated = getLastUpdated(data.groups);
+        data.groups = cleanCopy(data.groups);
+        data.groups = addDynamicCharacters(data.groups, data.characters);
+        data.groups = showWeighting(data.groups);
+        data.groups = orderByGroup(data.groups);
+        data.groups = highestWeighting(data.groups);
 
-    isDone = true;
+        updateOldData(data, id);
 
-    console.log('Updated ' + data.furniture.title);
+        isDone = true;
+
+        console.log('Updated ' + data.furniture.title);
+
+        return data;
+    });
 
     deasync.loopWhile(function() {
         return !isDone;
     });
 
     return data;
-});
+}
