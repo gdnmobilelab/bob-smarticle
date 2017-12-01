@@ -3,21 +3,13 @@ var gsjson = require('google-spreadsheet-to-json');
 var deasync = require('deasync');
 var Entities = require('html-entities').AllHtmlEntities;
 
+var validate = require('../scripts/validate.js');
+
 var keys = require('../keys.json');
 
 var isDebug = true;
 var isDone = false,
     data;
-
-function discardIncompleteAtoms(atoms) {
-    for (var i in atoms) {
-        if (!atoms[i].type) {
-            delete atoms[i];
-        }
-    }
-
-    return atoms;
-}
 
 function getFurniture(furniture) {
     var organisedFurniture = {}
@@ -210,8 +202,9 @@ fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
         id: id
     }
 
+    data = validate(data);
+
     // manipulate and clean data
-    data.groups = discardIncompleteAtoms(data.groups);
     data.groups = createTimeStamps(data.groups);
     data.lastUpdated = getLastUpdated(data.groups);
     data.groups = cleanCopy(data.groups);
