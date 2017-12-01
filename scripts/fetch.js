@@ -225,7 +225,7 @@ function updateOldData(data, id) {
     fs.writeJsonSync('./.data/smarticles/' + id + '.json', data);
 }
 
-module.exports = function(id) {
+module.exports = function(id, debug = false) {
     isDone = false;
 
     fetchData(id, function(spreadsheet, id) {
@@ -252,7 +252,9 @@ module.exports = function(id) {
         data.groups = orderByGroup(data.groups);
         data.groups = highestWeighting(data.groups);
 
-        updateOldData(data, id);
+        if (!debug) {
+            updateOldData(data, id);
+        }
 
         isDone = true;
 

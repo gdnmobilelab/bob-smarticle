@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     } else {
         var params = cleanParams(req.query);
 
-        var data = params.debug ? fetch(params.id) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
+        var data = params.debug ? fetch(params.id, params.debug) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
             data = seen(data, params);
             data = rate(data, params);
             data = clean(data);
