@@ -10,7 +10,7 @@ function discardIncompleteAtoms(atoms) {
 
 function validateDataTypes(atoms) {
     for (var i in atoms) {
-        if (typeof atoms[i].id !== 'number') {
+        if (typeof atoms[i].id !== 'string') {
             throw 'Id in atom ' + atoms[i].id + ' isn\'t a number or doesn\'t exist';
         }
 
