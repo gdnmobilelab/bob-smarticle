@@ -42,6 +42,42 @@ function getLastUpdated(atoms) {
     return lastUpdated;
 }
 
+function calculateTimeUntilRead(atoms) {
+    for (var i in atoms) {
+        atoms[i].timeUntilRead = evaluate(atoms[i]);
+
+        function evaluate(atom) {
+            switch (atom.type) {
+                case 'text':
+                    return atom.copy.length * 10 / 2;
+                    break;
+
+                case 'quote':
+                    return 500;
+                    break;
+
+                case 'tweet':
+                    return 500;
+                    break;
+
+                case 'graphic':
+                    return 500;
+                    break;
+
+                case 'image':
+                    return 500;
+                    break;
+
+                case 'video':
+                    return 1500;
+                    break;
+            }
+        }
+    }
+
+    return atoms;
+}
+
 function returnDynamicCharacterHtml(i, character, isEndOfSentence) {
     return '<span class=\'character character--' + i + '\'><span class=\'character__short\'>' + character.shortName + '</span><span class=\'character__long\'>' + character.longName + '</span></span>';
 }
@@ -206,6 +242,7 @@ fetchData(process.argv.slice(2)[0], function(spreadsheet, id) {
 
     // manipulate and clean data
     data.groups = createTimeStamps(data.groups);
+    data.groups = calculateTimeUntilRead(data.groups);
     data.lastUpdated = getLastUpdated(data.groups);
     data.groups = cleanCopy(data.groups);
     data.groups = addDynamicCharacters(data.groups, data.characters);
