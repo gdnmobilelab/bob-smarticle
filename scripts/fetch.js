@@ -48,7 +48,8 @@ function calculateTimeUntilRead(atoms) {
         function evaluate(atom) {
             switch (atom.type) {
                 case 'text':
-                    return (atom.copy.length * 10) / 2;
+                    var estimate = (atom.copy.length * 10) / 2;
+                    return (estimate > 2000) ? 2000 : estimate;
                     break;
 
                 case 'quote':
