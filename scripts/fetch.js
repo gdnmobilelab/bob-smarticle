@@ -49,7 +49,7 @@ function calculateTimeUntilRead(atoms) {
             switch (atom.type) {
                 case 'text':
                     var estimate = (atom.copy.length * 10) / 2;
-                    return (estimate > 2000) ? 2000 : estimate;
+                    return (estimate > 1250) ? 1250 : estimate;
                     break;
 
                 case 'quote':
@@ -69,7 +69,7 @@ function calculateTimeUntilRead(atoms) {
                     break;
 
                 case 'video':
-                    return 1500;
+                    return 1000;
                     break;
             }
         }

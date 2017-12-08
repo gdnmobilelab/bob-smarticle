@@ -5,6 +5,7 @@ var cap = require('./scripts/cap.js');
 var groups = require('./scripts/groups.js');
 var seen = require('./scripts/seen.js');
 var fetch = require('./scripts/fetch.js');
+var notified = require('./scripts/notified.js');
 
 var fs = require('fs-extra');
 var express = require('express');
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
         var params = cleanParams(req.query);
 
         var data = params.debug ? fetch(params.id, params.debug) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
+            data = notified(data, params.notified);
             data = seen(data, params);
             data = rate(data, params);
             data = clean(data);
