@@ -45,7 +45,7 @@ function evaluateSeen(group, seen) {
 
 function boostFaqsIfNotSeen(group) {
     if (group.isFaq && group.seen !== group.atomCount) {
-        return .45;
+        return .6;
     } else {
         return 0;
     }
@@ -80,6 +80,8 @@ function rateAtoms(data, params) {
 
         data.groups[i].rating = rating;
     }
+
+    console.log(data.groups);
 
     data.groups = filterByRating(data.groups);
 
