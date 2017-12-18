@@ -5,6 +5,7 @@ function moveNotifiedGroup(data, notified) {
                 data.notified = data.groups[i];
                 data.notified.isNotified = true;
                 delete data.groups[i];
+                break;
             }
         }
     }
