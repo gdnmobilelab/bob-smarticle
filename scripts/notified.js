@@ -4,6 +4,7 @@ function moveNotifiedGroup(data, notified) {
             if (data.groups[i].atoms[atom].id === notified) {
                 data.notified = data.groups[i];
                 data.notified.isNotified = true;
+                delete data.groups[i];
             }
         }
     }

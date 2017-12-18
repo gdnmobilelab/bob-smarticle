@@ -69,7 +69,7 @@ function calculateTimeUntilRead(atoms) {
                     break;
 
                 case 'video':
-                    return 1000;
+                    return 750;
                     break;
             }
         }
