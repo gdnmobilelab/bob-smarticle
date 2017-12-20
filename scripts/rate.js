@@ -81,7 +81,7 @@ function rateAtoms(data, params) {
         data.groups[i].rating = rating;
     }
 
-    data.groups = filterByRating(data.groups);
+    data.groups = params.debug ? data.groups : filterByRating(data.groups);
 
     return data;
 }

@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
             data = seen(data, params);
             data = rate(data, params);
             data = clean(data);
-            data = cap(data);
+            data = params.debug ? data : cap(data);
             data = groups(data, params);
 
         res.setHeader('Content-Type', 'application/json');
