@@ -21,6 +21,19 @@ function getLastUpdated(atoms) {
     return lastUpdated;
 }
 
+
+function getFirstUpdated(atoms) {
+    var firstUpdated = atoms[0].timeStamp;
+
+    for (var i in atoms) {
+        if (atoms[i].timeStamp < firstUpdated) {
+            firstUpdated = atoms[i].timeStamp;
+        }
+    }
+
+    return firstUpdated;
+}
+
 function calculateTimeUntilRead(atoms) {
     for (var i in atoms) {
         atoms[i].timeUntilRead = evaluate(atoms[i]);
@@ -176,10 +189,57 @@ function highestWeighting(groups) {
     return groups;
 }
 
+function getAtomIdsBeforeDate(date, atoms) {
+    var Ids = [];
+
+    for (var i in atoms) {
+        if (atoms[i].timeStamp < date) {
+            Ids.push(atoms[i].id);
+        }
+    }
+
+    return Ids;
+}
+
+
+function getPreviewData(data) {
+    var preview = {};
+
+    preview[0] = {};
+    preview[0].seen = ['0'];
+    preview[0].visit = 1;
+    preview[0].date = new Date(data.lastUpdated - (60*60*24*7*1000));
+
+    if (preview[0].date < data.firstUpdated) {
+        preview[0].date = data.firstUpdated;
+    }
+
+    preview[1] = {};
+    preview[1].visit = 2;
+    preview[1].date = new Date(preview[0].date);
+    preview[1].date.setDate(preview[1].date.getDate() + 1);
+    preview[1].seen = getAtomIdsBeforeDate(preview[1].date, data.groups)
+
+    preview[2] = {};
+    preview[2].visit = 2;
+    preview[2].date = new Date(preview[0].date);
+    preview[2].date.setDate(preview[2].date.getDate() + 3);
+    preview[2].seen = getAtomIdsBeforeDate(preview[2].date, data.groups)
+
+    preview[3] = {};
+    preview[3].visit = 3;
+    preview[3].date = data.lastUpdated;
+    preview[3].seen = getAtomIdsBeforeDate(preview[3].date, data.groups);
+
+    return preview;
+}
+
 module.exports = function(data) {
     data.groups = createTimeStamps(data.groups);
     data.groups = calculateTimeUntilRead(data.groups);
     data.lastUpdated = getLastUpdated(data.groups);
+    data.firstUpdated = getFirstUpdated(data.groups);
+    data.preview = getPreviewData(data);
     data.groups = cleanCopy(data.groups);
     data.groups = addDynamicCharacters(data.groups, data.characters);
     data.groups = showWeighting(data.groups);
