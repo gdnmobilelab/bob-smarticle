@@ -30,21 +30,9 @@ function expandGroupsOfTwo(groups) {
     return groups;
 }
 
-// Does this belong in this file?
-function hasFaqsFlag(groups) {
-    for (var i in groups) {
-        if (groups[i].isFaq) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 module.exports = function(data, params) {
     data.groups = expandCollapsedGroupsIfSeen(data.groups, params.seen);
     data.groups = expandGroupsOfTwo(data.groups);
-    data.hasFaqs = hasFaqsFlag(data.groups);
 
     return data;
 };
