@@ -3,7 +3,7 @@ var gsjson = require('google-spreadsheet-to-json');
 var deasync = require('deasync');
 var Entities = require('html-entities').AllHtmlEntities;
 
-var validate = require('../scripts/validate.js');
+var validate = require('./fetch/validate.js');
 
 var keys = require('../keys.json');
 
