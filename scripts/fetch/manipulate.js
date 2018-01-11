@@ -201,7 +201,6 @@ function getAtomIdsBeforeDate(date, atoms) {
     return Ids;
 }
 
-
 function getPreviewData(data) {
     var preview = {};
 

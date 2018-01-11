@@ -1,7 +1,6 @@
 function cleanParams(params) {
-    params.seen = params.seen.split(',');
     for (var i in params.seen) {
-        params.seen[i] = parseInt(params.seen[i]);
+        params.seen[i].id = parseInt(params.seen[i].id);
     }
 
     params.visit = parseInt(params.visit);

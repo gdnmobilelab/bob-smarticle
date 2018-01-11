@@ -25,7 +25,7 @@ function weightingVsVisit(weighting, visit) {
     }
 }
 
-function evaluateSeen(group, seen) {
+function evaluateSeen(group) {
     if (group.atomCount === group.seen) {
         var highestWeighting = group.highestWeighting;
 
@@ -74,8 +74,8 @@ function rateAtoms(data, params) {
         var rating = 0;
             rating += evaluateWeighting(group.highestWeighting).clamp();
             rating += weightingVsVisit(group.highestWeighting, params.visit).clamp();
-            rating += evaluateSeen(group, params.seen).clamp();
-            rating += boostFaqsIfNotSeen(group, params.seen).clamp();
+            rating += evaluateSeen(group).clamp();
+            rating += boostFaqsIfNotSeen(group).clamp();
             rating = rating.clamp();
 
         data.groups[i].rating = rating;
