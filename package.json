@@ -25,5 +25,7 @@
     "google-spreadsheet-to-json": "^1.0.0",
     "html-entities": "^1.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "body-parser": "^1.18.2"
+  }
 }

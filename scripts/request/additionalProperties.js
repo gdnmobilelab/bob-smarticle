@@ -10,7 +10,6 @@ function hasFaqsFlag(groups) {
 
 
 module.exports = function(data) {
-    console.log(data);
     data.hasFaqs = hasFaqsFlag(data.groups);
 
     return data;
