@@ -37,4 +37,8 @@ app.post('/', (req, res) => {
     res.send(JSON.stringify(data));
 });
 
+app.get('/', (req,res) => {
+    res.send('Error: POST requests only');
+});
+
 app.listen(3000, () => console.log('Server running on port 3000'))
