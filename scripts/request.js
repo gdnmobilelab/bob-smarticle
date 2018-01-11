@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.all('/', (req, res) => {
+app.post('/', (req, res) => {
     var params = req.body;
 
     var data = params.debug ? fetch(params.id, params.debug) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
