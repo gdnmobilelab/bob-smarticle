@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/gdnmobilelab/bob-smarticle#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "deasync": "^0.1.10",
     "express": "^4.16.2",
     "fs-extra": "^4.0.2",

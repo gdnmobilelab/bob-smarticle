@@ -13,6 +13,27 @@ var fs = require('fs-extra');
 var express = require('express');
 var app = express();
 
+var bodyParser = require("body-parser");
+var app = express();
+
+app.use(bodyParser.json());
+
+// on client:
+
+// fetch("/", {
+//     headers: {
+//         "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//         hello: "there"
+//     })
+// })
+
+
+app.post('/', (req, res) => {
+    console.log("This variable should be a JS object:", req.body)
+})
+
 app.get('/', (req, res) => {
     if (Object.keys(req.query).length == 0) {
         res.send('No arguments provided');
@@ -20,13 +41,13 @@ app.get('/', (req, res) => {
         var params = cleanParams(req.query);
 
         var data = params.debug ? fetch(params.id, params.debug) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
-            data = additionalProperties(data);
-            data = notified(data, params.notified);
-            data = seen(data, params);
-            data = rate(data, params);
-            data = clean(data);
-            data = params.debug ? data : cap(data);
-            data = groups(data, params);
+        data = additionalProperties(data);
+        data = notified(data, params.notified);
+        data = seen(data, params);
+        data = rate(data, params);
+        data = clean(data);
+        data = params.debug ? data : cap(data);
+        data = groups(data, params);
 
         res.setHeader('Content-Type', 'application/json');
         res.header("Access-Control-Allow-Origin", "*");
