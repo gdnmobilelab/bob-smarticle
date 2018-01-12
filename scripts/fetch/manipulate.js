@@ -190,18 +190,30 @@ function highestWeighting(groups) {
 }
 
 function getPreviewRelevantDate(data, preview) {
-    var baseDate = new Date(data.lastUpdated - (60*60*24*7*1000));
+    var day = 60*60*24*1000;
+    var baseDate = new Date(data.lastUpdated - (day * 7));
 
     if (data.firstUpdated > baseDate) {
         baseDate = data.firstUpdated
     }
 
-    var difference = baseDate - data.lastUpdated;
+    var difference =  data.lastUpdated - baseDate;
+    var differenceToRelativeDate = difference / 7;
 
-    return baseDate;
+    if (preview === 2) {
+        return new Date(data.lastUpdated - differenceToRelativeDate);
+    } else if (preview === 3) {
+        return new Date(data.lastUpdated - (differenceToRelativeDate * 3))
+    } else {
+        return new Date(data.lastUpdated - difference);
+    }
 }
 
 function getSeenAtoms(data, preview) {
+    if (preview == 1) {
+        return [];
+    }
+
     var seenArray = [];
     var date = getPreviewRelevantDate(data, preview);
 
@@ -229,7 +241,7 @@ function generatePreviewData(data, i) {
 function getPreviewData(data) {
     var preview = {};
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 1; i < 5; i++) {
         preview[i] = generatePreviewData(data, i);
     }
 
