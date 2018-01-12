@@ -11,7 +11,6 @@ function evaluateSeen(group, seen) {
     for (var i in group.atoms) {
         for (var s in seen) {
             if (seen[s].id === parseInt(group.atoms[i].id)) {
-                console.log('MATCH');
                 numberOfSeenAtoms++;
             }
         }

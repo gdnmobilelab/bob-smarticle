@@ -25,7 +25,6 @@ app.post('/', (req, res) => {
     var data = params.debug ? fetch(params.id, params.debug) : fs.readJsonSync('./.data/smarticles/' + params.id + '.json');
         params = params.preview ? data.preview[params.preview] : params;
         params = cleanParams(params);
-        console.log(params);
         data = additionalProperties(data);
         data = notified(data, params.notified);
         data = seen(data, params);
