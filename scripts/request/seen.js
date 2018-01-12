@@ -2,9 +2,16 @@ function evaluateSeen(group, seen) {
     var numberOfAtoms = Object.keys(group.atoms).length;
     var numberOfSeenAtoms = 0;
 
+    var groupIds = [];
+
+    for (var i in group.atoms) {
+        groupIds.push(group.atoms[i].id);
+    }
+
     for (var i in group.atoms) {
         for (var s in seen) {
-            if (seen[s].id === group.atoms[i].id) {
+            if (seen[s].id === parseInt(group.atoms[i].id)) {
+                console.log('MATCH');
                 numberOfSeenAtoms++;
             }
         }

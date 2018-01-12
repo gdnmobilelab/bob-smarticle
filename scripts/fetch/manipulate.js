@@ -189,46 +189,49 @@ function highestWeighting(groups) {
     return groups;
 }
 
-function getAtomIdsBeforeDate(date, atoms) {
-    var Ids = [];
+function getPreviewRelevantDate(data, preview) {
+    var baseDate = new Date(data.lastUpdated - (60*60*24*7*1000));
 
-    for (var i in atoms) {
-        if (atoms[i].timeStamp < date) {
-            Ids.push(atoms[i].id);
+    if (data.firstUpdated > baseDate) {
+        baseDate = data.firstUpdated
+    }
+
+    var difference = baseDate - data.lastUpdated;
+
+    return baseDate;
+}
+
+function getSeenAtoms(data, preview) {
+    var seenArray = [];
+    var date = getPreviewRelevantDate(data, preview);
+
+    for (var i in data.groups) {
+        if (data.groups[i].timeStamp < date) {
+            seenArray.push({
+                id: data.groups[i].id,
+                date: date,
+                seen: 1
+            })
         }
     }
 
-    return Ids;
+    return seenArray;
+}
+
+function generatePreviewData(data, i) {
+    return {
+        id: data.id,
+        visit: i > 1 ? 2 : 1,
+        seen: getSeenAtoms(data, i)
+    }
 }
 
 function getPreviewData(data) {
     var preview = {};
 
-    preview[0] = {};
-    preview[0].seen = ['0'];
-    preview[0].visit = 1;
-    preview[0].date = new Date(data.lastUpdated - (60*60*24*7*1000));
-
-    if (preview[0].date < data.firstUpdated) {
-        preview[0].date = data.firstUpdated;
+    for (var i = 0; i < 4; i++) {
+        preview[i] = generatePreviewData(data, i);
     }
-
-    preview[1] = {};
-    preview[1].visit = 2;
-    preview[1].date = new Date(preview[0].date);
-    preview[1].date.setDate(preview[1].date.getDate() + 1);
-    preview[1].seen = getAtomIdsBeforeDate(preview[1].date, data.groups)
-
-    preview[2] = {};
-    preview[2].visit = 2;
-    preview[2].date = new Date(preview[0].date);
-    preview[2].date.setDate(preview[2].date.getDate() + 3);
-    preview[2].seen = getAtomIdsBeforeDate(preview[2].date, data.groups)
-
-    preview[3] = {};
-    preview[3].visit = 3;
-    preview[3].date = data.lastUpdated;
-    preview[3].seen = getAtomIdsBeforeDate(preview[3].date, data.groups);
 
     return preview;
 }
