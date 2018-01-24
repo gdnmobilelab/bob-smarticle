@@ -8,7 +8,6 @@ function hasFaqsFlag(groups) {
     return false;
 }
 
-
 module.exports = function(data) {
     data.hasFaqs = hasFaqsFlag(data.groups);
 

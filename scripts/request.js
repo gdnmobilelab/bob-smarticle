@@ -8,6 +8,7 @@ var clean = require('./request/clean.js');
 var cap = require('./request/cap.js');
 var groups = require('./request/groups.js');
 var additionalProperties = require('./request/additionalProperties.js');
+var onboarding = require('./request/onboarding.js');
 
 var fs = require('fs-extra');
 var bodyParser = require('body-parser');
@@ -32,6 +33,7 @@ app.post('/', (req, res) => {
         data = params.debug ? data : cap(data);
         data = groups(data, params);
         data = additionalProperties(data);
+        data = onboarding(data, params);
 
     res.setHeader('Content-Type', 'application/json');
     res.header("Access-Control-Allow-Origin", "*");
