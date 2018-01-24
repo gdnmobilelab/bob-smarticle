@@ -14,7 +14,7 @@ function addOnboardingAtom(data) {
 }
 
 module.exports = function(data, params) {
-    if (params.onboarding == 'true') {
+    if (params.onboarding == 'true' || params.onboarding == true) {
         data = addOnboardingAtom(data);
     }
 
