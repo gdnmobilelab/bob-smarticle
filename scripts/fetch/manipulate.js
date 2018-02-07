@@ -235,7 +235,8 @@ function generatePreviewData(data, i) {
         id: data.id,
         visit: i > 1 ? 2 : 1,
         onboarding: i === 1 ? true : false,
-        seen: getSeenAtoms(data, i)
+        seen: getSeenAtoms(data, i),
+        lastUpdated: getPreviewRelevantDate(data, i)
     }
 }
 

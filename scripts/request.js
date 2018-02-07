@@ -7,6 +7,7 @@ var rate = require('./request/rate.js');
 var clean = require('./request/clean.js');
 var cap = require('./request/cap.js');
 var groups = require('./request/groups.js');
+var reintroduction = require('./request/reintroduction.js');
 var additionalProperties = require('./request/additionalProperties.js');
 var onboarding = require('./request/onboarding.js');
 
