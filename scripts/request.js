@@ -32,6 +32,7 @@ app.post('/', (req, res) => {
         data = clean(data);
         data = params.debug ? data : cap(data);
         data = groups(data, params);
+        data = reintroduction(data, params);
         data = additionalProperties(data);
         data = onboarding(data, params);
 

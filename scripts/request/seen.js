@@ -23,8 +23,11 @@ function evaluateSeen(group, seen) {
 }
 
 function removeSeenGroups(data) {
+    data.removedGroups = {};
+
     for (var i in data.groups) {
         if (data.groups[i].atomCount === data.groups[i].seen) {
+            data.removedGroups[i] = data.groups[i];
             delete data.groups[i];
         }
     }
