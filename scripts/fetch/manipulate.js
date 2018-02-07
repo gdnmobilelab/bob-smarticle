@@ -205,7 +205,7 @@ function getPreviewRelevantDate(data, preview) {
     } else if (preview === 3) {
         return new Date(data.lastUpdated - (differenceToRelativeDate * 3))
     } else {
-        return new Date(data.lastUpdated - difference);
+        return new Date(data.lastUpdated - (difference - 10));
     }
 }
 
@@ -222,7 +222,8 @@ function getSeenAtoms(data, preview) {
             seenArray.push({
                 id: data.groups[i].id,
                 date: date,
-                seen: 1
+                seen: 1,
+                timeInView: 1250
             })
         }
     }

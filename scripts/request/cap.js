@@ -29,7 +29,6 @@ module.exports = function(data) {
 
     for (var i in data.groups) {
         if (groupsToRemove.includes(i)) {
-            data.removedGroups[i] = data.groups[i];
             delete data.groups[i];
         }
     }
