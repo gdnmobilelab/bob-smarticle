@@ -205,7 +205,7 @@ function getPreviewRelevantDate(data, preview) {
     } else if (preview === 3) {
         return new Date(data.lastUpdated - (differenceToRelativeDate * 3))
     } else {
-        return new Date(data.lastUpdated - difference);
+        return new Date(data.lastUpdated - (difference - 10));
     }
 }
 
@@ -222,7 +222,8 @@ function getSeenAtoms(data, preview) {
             seenArray.push({
                 id: data.groups[i].id,
                 date: date,
-                seen: 1
+                seen: 1,
+                timeInView: 1250
             })
         }
     }
@@ -235,7 +236,9 @@ function generatePreviewData(data, i) {
         id: data.id,
         visit: i > 1 ? 2 : 1,
         onboarding: i === 1 ? true : false,
-        seen: getSeenAtoms(data, i)
+        seen: getSeenAtoms(data, i),
+        lastVisited: getPreviewRelevantDate(data, i),
+        today: data.lastUpdated
     }
 }
 

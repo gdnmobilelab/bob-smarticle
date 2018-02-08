@@ -51,14 +51,15 @@ function boostFaqsIfNotSeen(group) {
     }
 }
 
-function filterByRating(groups) {
-    for (var i in groups) {
-        if (groups[i].rating <= 0) {
-            delete groups[i];
+function filterByRating(data) {
+    for (var i in data.groups) {
+        if (data.groups[i].rating <= 0) {
+            data.removedGroups[i] = data.groups[i];
+            delete data.groups[i];
         }
     }
 
-    return groups;
+    return data;
 }
 
 Number.prototype.clamp = function() {
@@ -81,7 +82,8 @@ function rateAtoms(data, params) {
         data.groups[i].rating = rating;
     }
 
-    data.groups = params.debug ? data.groups : filterByRating(data.groups);
+    data = params.debug ? data : filterByRating(data);
+
 
     return data;
 }
