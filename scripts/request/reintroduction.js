@@ -104,7 +104,9 @@ function capGroups(groups, params) {
 
 function collapseGroups(groups) {
     for (var i in groups) {
-        groups[i].groupType = 'collapsed';
+        if (Object.keys(groups[i].atoms).length >= 2) {
+            groups[i].groupType = 'collapsed';
+        }
     }
 
     return groups;
@@ -119,18 +121,21 @@ function addReintroducedTag(groups) {
 }
 
 module.exports = function(data, params) {
-    params = calculateReintroductionParams(params);
-    data.params = params;
-    data.removedGroups = removeLowWeightingAtoms(data.removedGroups, params);
-    data.removedGroups = addSeenDataToGroups(data.removedGroups, params);
-    data.removedGroups = removeHighlySeenGroups(data.removedGroups, params);
-    data.removedGroups = rateGroups(data.removedGroups, params);
-    data.removedGroups = capGroups(data.removedGroups, params);
-    data.removedGroups = collapseGroups(data.removedGroups);
-    data.removedGroups = addReintroducedTag(data.removedGroups);
+    if (params.visit !== 1) {
+        console.log('reintroducing');
+        params = calculateReintroductionParams(params);
+        data.params = params;
+        data.removedGroups = removeLowWeightingAtoms(data.removedGroups, params);
+        data.removedGroups = addSeenDataToGroups(data.removedGroups, params);
+        data.removedGroups = removeHighlySeenGroups(data.removedGroups, params);
+        data.removedGroups = rateGroups(data.removedGroups, params);
+        data.removedGroups = capGroups(data.removedGroups, params);
+        data.removedGroups = collapseGroups(data.removedGroups);
+        data.removedGroups = addReintroducedTag(data.removedGroups);
 
-    for (var i in data.removedGroups) {
-        data.groups[i] = data.removedGroups[i];
+        for (var i in data.removedGroups) {
+            data.groups[i] = data.removedGroups[i];
+        }
     }
 
     delete data.removedGroups;
