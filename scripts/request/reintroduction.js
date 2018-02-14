@@ -27,6 +27,16 @@ function calculateReintroductionParams(params) {
     return params;
 }
 
+function removeUnseenAtoms(groups, params) {
+    for (var i in groups) {
+        if (groups[i].timeInView < 1) {
+            delete groups[i];
+        }
+    }
+
+    return params;
+}
+
 function removeLowWeightingAtoms(groups, params) {
     for (var i in groups) {
         if (!params.allowedWeightings.includes(groups[i].highestWeighting)) {
@@ -122,9 +132,9 @@ function addReintroducedTag(groups) {
 
 module.exports = function(data, params) {
     if (params.visit !== 1) {
-        console.log('reintroducing');
         params = calculateReintroductionParams(params);
         data.params = params;
+        data.removedGroups = removeUnseenAtoms(data.removedGroups, params);
         data.removedGroups = removeLowWeightingAtoms(data.removedGroups, params);
         data.removedGroups = addSeenDataToGroups(data.removedGroups, params);
         data.removedGroups = removeHighlySeenGroups(data.removedGroups, params);

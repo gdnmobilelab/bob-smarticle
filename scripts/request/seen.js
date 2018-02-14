@@ -1,6 +1,7 @@
 function evaluateSeen(group, seen) {
     var numberOfAtoms = Object.keys(group.atoms).length;
     var numberOfSeenAtoms = 0;
+    var timeInView = 0;
 
     var groupIds = [];
 
@@ -12,11 +13,13 @@ function evaluateSeen(group, seen) {
         for (var s in seen) {
             if (seen[s].id === parseInt(group.atoms[i].id)) {
                 numberOfSeenAtoms++;
+                timeInView += parseInt(seen[s].timeInView);
             }
         }
     }
 
     group.seen = numberOfSeenAtoms;
+    group.timeInView = timeInView;
     group.atomCount = numberOfAtoms;
 
     return group;
